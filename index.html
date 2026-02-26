@@ -1,103 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monk.AI | Decentralized Intelligence</title>
+<title>Monk.AI | Cyber Intelligence</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
-body{background:#050510;color:white;overflow-x:hidden;cursor:none;}
+body{background:black;color:#00ffcc;overflow-x:hidden;}
 
-/* LOADING SCREEN */
+/* MATRIX LOADER */
 #loader{
 position:fixed;
 width:100%;
 height:100%;
-background:#000;
+background:black;
+z-index:9999;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-z-index:9999;
-transition:1s ease;
 }
 
-.loader-circle{
-width:80px;
-height:80px;
-border:4px solid #6C2BD9;
-border-top:4px solid #00C2FF;
-border-radius:50%;
-animation:spin 1s linear infinite;
+canvas.matrix{
+position:absolute;
+top:0;left:0;
 }
 
-@keyframes spin{
-0%{transform:rotate(0);}
-100%{transform:rotate(360deg);}
+.glitch{
+font-size:40px;
+color:#00ffcc;
+position:relative;
+animation:glitch 1s infinite;
 }
 
-.loader-text{
-margin-top:20px;
-color:#00C2FF;
-letter-spacing:3px;
-animation:pulse 1.5s infinite alternate;
+@keyframes glitch{
+0%{text-shadow:2px 0 red,-2px 0 blue;}
+50%{text-shadow:-2px 0 red,2px 0 blue;}
+100%{text-shadow:2px 0 red,-2px 0 blue;}
 }
 
-@keyframes pulse{
-from{opacity:0.5;}
-to{opacity:1;}
-}
-
-/* PARTICLES */
-#particles-js{
-position:fixed;
-width:100%;
-height:100%;
-z-index:-2;
-}
-
-/* CURSOR */
-.cursor{
-width:20px;height:20px;
-border-radius:50%;
-position:fixed;
-background:rgba(0,194,255,0.6);
-pointer-events:none;
-mix-blend-mode:screen;
-z-index:9999;
-}
-
+/* NAV */
 header{
 position:fixed;
 top:20px;
 left:50%;
 transform:translateX(-50%);
-width:80%;
+background:rgba(0,255,204,0.1);
 padding:15px 40px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
 border-radius:50px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+backdrop-filter:blur(20px);
 z-index:1000;
 }
 
-header h1{color:#6C2BD9;}
-
-nav a{
-color:white;
-margin-left:20px;
-text-decoration:none;
-transition:0.3s;
-}
-nav a:hover{color:#00C2FF;}
-
+/* HERO */
 .hero{
 height:100vh;
 display:flex;
@@ -107,44 +68,27 @@ align-items:center;
 text-align:center;
 }
 
-.hero h2{
-font-size:60px;
-background:linear-gradient(90deg,#6C2BD9,#00C2FF);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.btn{
-margin-top:30px;
-padding:15px 40px;
+button{
+padding:12px 30px;
 border:none;
-border-radius:50px;
-background:linear-gradient(90deg,#6C2BD9,#00C2FF);
-color:white;
+background:#00ffcc;
+color:black;
 cursor:pointer;
-transition:0.3s;
-}
-.btn:hover{transform:scale(1.1);}
-
-section{
-padding:120px 10%;
-text-align:center;
+margin-top:20px;
 }
 
-.glass{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 30px rgba(0,194,255,0.3);
-margin-top:40px;
+/* 3D BRAIN CONTAINER */
+#brain{
+width:400px;
+height:400px;
+margin:auto;
 }
 
-footer{
-padding:40px;
-text-align:center;
-background:#000;
-color:#777;
+/* PRICE */
+#price{
+font-size:28px;
+margin-top:20px;
+color:#00ffcc;
 }
 </style>
 </head>
@@ -153,94 +97,97 @@ color:#777;
 
 <!-- LOADER -->
 <div id="loader">
-<div class="loader-circle"></div>
-<div class="loader-text">INITIALIZING AI PROTOCOL...</div>
+<canvas class="matrix"></canvas>
+<div class="glitch">INITIALIZING MONK.AI...</div>
 </div>
 
-<div id="particles-js"></div>
-<div class="cursor" id="cursor"></div>
-
-<header>
-<h1>Monk.AI</h1>
-<nav>
-<a href="#about">About</a>
-<a href="#chart">Chart</a>
-</nav>
-</header>
+<header>Monk.AI</header>
 
 <div class="hero">
-<h2>AI POWERED BLOCKCHAIN FUTURE</h2>
-<button class="btn" onclick="connectWallet()">Connect Wallet</button>
+<div id="brain"></div>
+<button onclick="connectWallet()">Connect Wallet</button>
+<div id="price">Loading Price...</div>
 </div>
-
-<section id="about">
-<h2>About Monk.AI</h2>
-<div class="glass">
-<p>Decentralized AI protocol enabling staking, governance and intelligent automation.</p>
-</div>
-</section>
-
-<section id="chart">
-<h2>Live Token Chart</h2>
-<div class="glass">
-<canvas id="tokenChart"></canvas>
-</div>
-</section>
-
-<footer>
-© 2026 Monk.AI — Decentralized Intelligence
-</footer>
 
 <script>
-/* Hide Loader After Page Load */
-window.addEventListener("load",()=>{
-setTimeout(()=>{
-document.getElementById("loader").style.opacity="0";
+/* MATRIX RAIN */
+const canvas=document.querySelector(".matrix");
+const ctx=canvas.getContext("2d");
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+
+const letters="01";
+const fontSize=16;
+const columns=canvas.width/fontSize;
+const drops=[];
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#0f0";
+ctx.font=fontSize+"px monospace";
+for(let i=0;i<drops.length;i++){
+const text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+if(drops[i]*fontSize>canvas.height&&Math.random()>0.975) drops[i]=0;
+drops[i]++;
+}
+}
+setInterval(draw,33);
+
+/* Hide loader */
+window.onload=function(){
 setTimeout(()=>{
 document.getElementById("loader").style.display="none";
-},1000);
-},2000);
-});
+},3000);
+playSound();
+};
 
-/* Particles */
-particlesJS("particles-js",{
-particles:{number:{value:80},size:{value:3},
-color:{value:"#00C2FF"},
-line_linked:{enable:true,color:"#6C2BD9"},
-move:{speed:2}}
-});
+/* SOUND */
+function playSound(){
+let audio=new Audio("https://www.soundjay.com/button/sounds/button-16.mp3");
+audio.play();
+}
 
-/* Cursor Glow */
-const cursor=document.getElementById("cursor");
-document.addEventListener("mousemove",(e)=>{
-cursor.style.left=e.pageX+"px";
-cursor.style.top=e.pageY+"px";
-});
-
-/* Wallet Connect */
+/* WALLET */
 async function connectWallet(){
 if(window.ethereum){
 await window.ethereum.request({method:'eth_requestAccounts'});
-alert("Wallet Connected 🚀");
+alert("Wallet Connected");
 }else{
-alert("Install MetaMask!");
+alert("Install MetaMask");
 }
 }
 
-/* Chart */
-const ctx=document.getElementById('tokenChart');
-new Chart(ctx,{
-type:'line',
-data:{
-labels:["Jan","Feb","Mar","Apr","May","Jun"],
-datasets:[{
-label:"MAI Price",
-data:[0.02,0.05,0.03,0.08,0.06,0.12],
-borderColor:"#00C2FF",
-tension:0.4
-}]
-}
+/* LIVE TOKEN PRICE (CoinGecko Example using Ethereum) */
+fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd")
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("price").innerHTML="ETH Price: $"+data.ethereum.usd;
 });
+
+/* 3D BRAIN (Sphere Simulation) */
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,400/400,0.1,1000);
+const renderer=new THREE.WebGLRenderer();
+renderer.setSize(400,400);
+document.getElementById("brain").appendChild(renderer.domElement);
+
+const geometry=new THREE.SphereGeometry(1,32,32);
+const material=new THREE.MeshBasicMaterial({color:0x00ffcc,wireframe:true});
+const sphere=new THREE.Mesh(geometry,material);
+scene.add(sphere);
+
+camera.position.z=3;
+
+function animate(){
+requestAnimationFrame(animate);
+sphere.rotation.x+=0.01;
+sphere.rotation.y+=0.01;
+renderer.render(scene,camera);
+}
+animate();
 </script>
 
 </body>
