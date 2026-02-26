@@ -6,8 +6,6 @@
 <title>Monk.AI | Cyber Intelligence</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
@@ -56,6 +54,7 @@ padding:15px 40px;
 border-radius:50px;
 backdrop-filter:blur(20px);
 z-index:1000;
+color:#00ffcc;
 }
 
 /* HERO */
@@ -77,18 +76,11 @@ cursor:pointer;
 margin-top:20px;
 }
 
-/* 3D BRAIN CONTAINER */
+/* 3D BRAIN */
 #brain{
 width:400px;
 height:400px;
 margin:auto;
-}
-
-/* PRICE */
-#price{
-font-size:28px;
-margin-top:20px;
-color:#00ffcc;
 }
 </style>
 </head>
@@ -106,7 +98,6 @@ color:#00ffcc;
 <div class="hero">
 <div id="brain"></div>
 <button onclick="connectWallet()">Connect Wallet</button>
-<div id="price">Loading Price...</div>
 </div>
 
 <script>
@@ -141,14 +132,7 @@ window.onload=function(){
 setTimeout(()=>{
 document.getElementById("loader").style.display="none";
 },3000);
-playSound();
 };
-
-/* SOUND */
-function playSound(){
-let audio=new Audio("https://www.soundjay.com/button/sounds/button-16.mp3");
-audio.play();
-}
 
 /* WALLET */
 async function connectWallet(){
@@ -160,14 +144,7 @@ alert("Install MetaMask");
 }
 }
 
-/* LIVE TOKEN PRICE (CoinGecko Example using Ethereum) */
-fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd")
-.then(res=>res.json())
-.then(data=>{
-document.getElementById("price").innerHTML="ETH Price: $"+data.ethereum.usd;
-});
-
-/* 3D BRAIN (Sphere Simulation) */
+/* 3D ROTATING SPHERE */
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,400/400,0.1,1000);
 const renderer=new THREE.WebGLRenderer();
