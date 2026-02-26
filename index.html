@@ -18,33 +18,17 @@ scroll-behavior:smooth;
 overflow-x:hidden;
 }
 
-/* ===== Animated Gradient Typography ===== */
-.hero h1{
-font-size:64px;
-margin-bottom:20px;
-background:linear-gradient(90deg,#00ffcc,#00ffaa,#00ffcc);
-background-size:200% auto;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:gradientMove 4s linear infinite;
-}
-
-@keyframes gradientMove{
-0%{background-position:0% center;}
-100%{background-position:200% center;}
-}
-
-/* Glow Background */
+/* ===== Glow Background ===== */
 .glow-bg{
 position:absolute;
-width:900px;
-height:900px;
+width:800px;
+height:800px;
 background:radial-gradient(circle,#00ffcc22,transparent 60%);
-filter:blur(150px);
-z-index:-2;
+filter:blur(120px);
+z-index:-1;
 }
 
-/* Navbar */
+/* ===== Floating Navbar ===== */
 nav{
 position:fixed;
 top:20px;
@@ -64,9 +48,10 @@ nav a{
 color:#00ffcc;
 text-decoration:none;
 font-size:14px;
+letter-spacing:1px;
 }
 
-/* Sections */
+/* ===== Sections ===== */
 section{
 min-height:100vh;
 display:flex;
@@ -86,12 +71,17 @@ opacity:1;
 transform:translateY(0);
 }
 
+/* ===== Hero ===== */
+.hero h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
 .hero p{
 max-width:700px;
 color:#88ffee;
 }
 
-/* Button */
 .btn{
 padding:14px 32px;
 border:none;
@@ -104,40 +94,35 @@ font-weight:bold;
 box-shadow:0 0 15px #00ffcc55;
 }
 
-/* Brain */
+/* ===== Neural Brain Container ===== */
 #brain{
 width:500px;
 height:500px;
 margin-top:40px;
 }
 
-/* About Box */
-.about-box{
-max-width:800px;
-background:rgba(0,255,204,0.08);
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 30px #00ffcc22;
-margin-top:30px;
-line-height:1.6;
-}
-
-/* Roadmap */
+/* ===== Timeline ===== */
 .timeline{
 max-width:800px;
 margin-top:40px;
-text-align:left;
 }
-
-.timeline-item{
-margin:25px 0;
+.timeline div{
+margin:30px 0;
 padding:20px;
 background:rgba(0,255,204,0.08);
 border-left:4px solid #00ffcc;
-border-radius:8px;
 }
 
-/* Responsive */
+/* ===== Investor ===== */
+.pitch-box{
+max-width:900px;
+background:rgba(0,255,204,0.08);
+padding:50px;
+border-radius:20px;
+box-shadow:0 0 30px #00ffcc22;
+}
+
+/* ===== Responsive ===== */
 @media(max-width:768px){
 .hero h1{font-size:36px;}
 #brain{width:300px;height:300px;}
@@ -149,7 +134,9 @@ border-radius:8px;
 
 <nav>
 <a href="#about">About</a>
+<a href="#metrics">Metrics</a>
 <a href="#roadmap">Roadmap</a>
+<a href="#invest">Invest</a>
 </nav>
 
 <!-- HERO -->
@@ -164,76 +151,69 @@ border-radius:8px;
 <button class="btn" onclick="connectWallet()">Connect Wallet</button>
 </section>
 
-<!-- ABOUT SECTION -->
+<!-- METRICS -->
+<section id="metrics">
+<h2>Network Metrics</h2>
+<div class="counter" id="counter1">0</div>
+<p>Active AI Nodes</p>
+</section>
+
+<!-- ABOUT -->
 <section id="about">
-<h2>About Monk.AI</h2>
-
-<div class="about-box">
-<p>
-Monk.AI is a decentralized artificial intelligence infrastructure protocol
-designed to power autonomous systems on blockchain networks.
+<h2>About The Protocol</h2>
+<p style="max-width:700px;margin-top:20px;">
+Monk.AI integrates decentralized neural networks, staking incentives,
+and autonomous governance to build scalable AI infrastructure.
 </p>
+</section>
 
-<br>
-
-<p>
-By combining distributed neural computation, staking-based incentives,
-and governance-driven architecture, Monk.AI creates a scalable,
-permissionless AI ecosystem for developers, enterprises,
-and next-generation decentralized applications.
-</p>
-
-<br>
-
-<p>
-Our mission is to build the foundational AI layer
-for Web3 — secure, autonomous, and community-governed.
-</p>
+<!-- ROADMAP -->
+<section id="roadmap">
+<h2>Roadmap</h2>
+<div class="timeline">
+<div>Phase 1 – Token Launch</div>
+<div>Phase 2 – Staking Platform</div>
+<div>Phase 3 – AI Node Deployment</div>
+<div>Phase 4 – Global Exchange Listings</div>
 </div>
 </section>
 
-<!-- ROADMAP SECTION -->
-<section id="roadmap">
-<h2>Development Roadmap</h2>
-
-<div class="timeline">
-
-<div class="timeline-item">
-<strong>Phase 1 – Foundation</strong><br>
-Protocol design, tokenomics architecture, core branding, and website launch.
-</div>
-
-<div class="timeline-item">
-<strong>Phase 2 – Staking Infrastructure</strong><br>
-Launch staking smart contracts, dashboard interface, and governance framework.
-</div>
-
-<div class="timeline-item">
-<strong>Phase 3 – Neural Node Deployment</strong><br>
-Deploy decentralized AI nodes and integrate distributed computation layer.
-</div>
-
-<div class="timeline-item">
-<strong>Phase 4 – Ecosystem Expansion</strong><br>
-Exchange listings, developer SDK release, and enterprise integrations.
-</div>
-
+<!-- INVESTOR -->
+<section id="invest">
+<h2>Investor Pitch</h2>
+<div class="pitch-box">
+<p>
+Monk.AI aims to become the decentralized backbone of AI computation.
+Our staking-driven neural architecture enables scalable intelligence
+without centralized control.
+</p>
+<button class="btn">Download Pitch Deck</button>
 </div>
 </section>
 
 <script>
 
-/* Scroll Reveal */
+/* ===== Scroll Reveal ===== */
 const sections=document.querySelectorAll("section");
 window.addEventListener("scroll",()=>{
 sections.forEach(sec=>{
-if(sec.getBoundingClientRect().top<window.innerHeight-100){
+const top=sec.getBoundingClientRect().top;
+if(top<window.innerHeight-100){
 sec.classList.add("visible");
 }
 });
 });
 
-/* Wallet */
+/* ===== Counter Animation ===== */
+let count=0;
+const counter=document.getElementById("counter1");
+const interval=setInterval(()=>{
+count+=50;
+counter.innerText=count;
+if(count>=10000) clearInterval(interval);
+},20);
+
+/* ===== Wallet ===== */
 async function connectWallet(){
 if(window.ethereum){
 await window.ethereum.request({method:'eth_requestAccounts'});
@@ -243,17 +223,18 @@ alert("Install MetaMask");
 }
 }
 
-/* ===== 3D Neural Brain with Particle Aura ===== */
+/* ===== 3D Neural Network Brain ===== */
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(75,500/500,0.1,1000);
 const renderer=new THREE.WebGLRenderer({alpha:true});
 renderer.setSize(500,500);
 document.getElementById("brain").appendChild(renderer.domElement);
-camera.position.z=6;
+camera.position.z=5;
 
+/* Create nodes */
 const nodes=[];
 for(let i=0;i<60;i++){
-const geometry=new THREE.SphereGeometry(0.07,8,8);
+const geometry=new THREE.SphereGeometry(0.06,8,8);
 const material=new THREE.MeshBasicMaterial({color:0x00ffcc});
 const node=new THREE.Mesh(geometry,material);
 node.position.set(
@@ -265,6 +246,7 @@ scene.add(node);
 nodes.push(node);
 }
 
+/* Connect nearby nodes */
 const lineMaterial=new THREE.LineBasicMaterial({color:0x00ffcc});
 for(let i=0;i<nodes.length;i++){
 for(let j=i+1;j<nodes.length;j++){
@@ -277,10 +259,282 @@ scene.add(line);
 }
 }
 
+/* Animate */
 function animate(){
 requestAnimationFrame(animate);
-scene.rotation.y+=0.002;
-scene.rotation.x+=0.001;
+scene.rotation.y+=0.003;
+renderer.render(scene,camera);
+}
+animate();
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monk.AI | Neural Infrastructure</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+
+body{
+background:#050505;
+color:#00ffcc;
+scroll-behavior:smooth;
+overflow-x:hidden;
+}
+
+/* ===== Glow Background ===== */
+.glow-bg{
+position:absolute;
+width:800px;
+height:800px;
+background:radial-gradient(circle,#00ffcc22,transparent 60%);
+filter:blur(120px);
+z-index:-1;
+}
+
+/* ===== Floating Navbar ===== */
+nav{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+padding:15px 40px;
+background:rgba(0,255,204,0.08);
+backdrop-filter:blur(20px);
+border-radius:50px;
+display:flex;
+gap:30px;
+z-index:1000;
+box-shadow:0 0 20px #00ffcc22;
+}
+
+nav a{
+color:#00ffcc;
+text-decoration:none;
+font-size:14px;
+letter-spacing:1px;
+}
+
+/* ===== Sections ===== */
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:100px 20px;
+text-align:center;
+opacity:0;
+transform:translateY(50px);
+transition:all 1s ease;
+position:relative;
+}
+
+section.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+/* ===== Hero ===== */
+.hero h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:700px;
+color:#88ffee;
+}
+
+.btn{
+padding:14px 32px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#00ffcc,#00ccaa);
+color:black;
+cursor:pointer;
+margin-top:30px;
+font-weight:bold;
+box-shadow:0 0 15px #00ffcc55;
+}
+
+/* ===== Neural Brain Container ===== */
+#brain{
+width:500px;
+height:500px;
+margin-top:40px;
+}
+
+/* ===== Timeline ===== */
+.timeline{
+max-width:800px;
+margin-top:40px;
+}
+.timeline div{
+margin:30px 0;
+padding:20px;
+background:rgba(0,255,204,0.08);
+border-left:4px solid #00ffcc;
+}
+
+/* ===== Investor ===== */
+.pitch-box{
+max-width:900px;
+background:rgba(0,255,204,0.08);
+padding:50px;
+border-radius:20px;
+box-shadow:0 0 30px #00ffcc22;
+}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+.hero h1{font-size:36px;}
+#brain{width:300px;height:300px;}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="#about">About</a>
+<a href="#metrics">Metrics</a>
+<a href="#roadmap">Roadmap</a>
+<a href="#invest">Invest</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero visible">
+<div class="glow-bg"></div>
+
+<h1>MONK.AI PROTOCOL</h1>
+<p>Decentralized AI Infrastructure powering autonomous blockchain intelligence.</p>
+
+<div id="brain"></div>
+
+<button class="btn" onclick="connectWallet()">Connect Wallet</button>
+</section>
+
+<!-- METRICS -->
+<section id="metrics">
+<h2>Network Metrics</h2>
+<div class="counter" id="counter1">0</div>
+<p>Active AI Nodes</p>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+<h2>About The Protocol</h2>
+<p style="max-width:700px;margin-top:20px;">
+Monk.AI integrates decentralized neural networks, staking incentives,
+and autonomous governance to build scalable AI infrastructure.
+</p>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+<h2>Roadmap</h2>
+<div class="timeline">
+<div>Phase 1 – Token Launch</div>
+<div>Phase 2 – Staking Platform</div>
+<div>Phase 3 – AI Node Deployment</div>
+<div>Phase 4 – Global Exchange Listings</div>
+</div>
+</section>
+
+<!-- INVESTOR -->
+<section id="invest">
+<h2>Investor Pitch</h2>
+<div class="pitch-box">
+<p>
+Monk.AI aims to become the decentralized backbone of AI computation.
+Our staking-driven neural architecture enables scalable intelligence
+without centralized control.
+</p>
+<button class="btn">Download Pitch Deck</button>
+</div>
+</section>
+
+<script>
+
+/* ===== Scroll Reveal ===== */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+sections.forEach(sec=>{
+const top=sec.getBoundingClientRect().top;
+if(top<window.innerHeight-100){
+sec.classList.add("visible");
+}
+});
+});
+
+/* ===== Counter Animation ===== */
+let count=0;
+const counter=document.getElementById("counter1");
+const interval=setInterval(()=>{
+count+=50;
+counter.innerText=count;
+if(count>=10000) clearInterval(interval);
+},20);
+
+/* ===== Wallet ===== */
+async function connectWallet(){
+if(window.ethereum){
+await window.ethereum.request({method:'eth_requestAccounts'});
+alert("Wallet Connected");
+}else{
+alert("Install MetaMask");
+}
+}
+
+/* ===== 3D Neural Network Brain ===== */
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,500/500,0.1,1000);
+const renderer=new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(500,500);
+document.getElementById("brain").appendChild(renderer.domElement);
+camera.position.z=5;
+
+/* Create nodes */
+const nodes=[];
+for(let i=0;i<60;i++){
+const geometry=new THREE.SphereGeometry(0.06,8,8);
+const material=new THREE.MeshBasicMaterial({color:0x00ffcc});
+const node=new THREE.Mesh(geometry,material);
+node.position.set(
+(Math.random()-0.5)*4,
+(Math.random()-0.5)*4,
+(Math.random()-0.5)*4
+);
+scene.add(node);
+nodes.push(node);
+}
+
+/* Connect nearby nodes */
+const lineMaterial=new THREE.LineBasicMaterial({color:0x00ffcc});
+for(let i=0;i<nodes.length;i++){
+for(let j=i+1;j<nodes.length;j++){
+if(nodes[i].position.distanceTo(nodes[j].position)<1.5){
+const points=[nodes[i].position,nodes[j].position];
+const geometry=new THREE.BufferGeometry().setFromPoints(points);
+const line=new THREE.Line(geometry,lineMaterial);
+scene.add(line);
+}
+}
+}
+
+/* Animate */
+function animate(){
+requestAnimationFrame(animate);
+scene.rotation.y+=0.003;
 renderer.render(scene,camera);
 }
 animate();
