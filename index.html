@@ -161,11 +161,18 @@ to create an autonomous neural blockchain network.
 <script>
 
 /* Loader */
-window.onload=function(){
-setTimeout(()=>{
-document.getElementById("loader").style.display="none";
-},2000);
-};
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function(){
+        const loader = document.getElementById("loader");
+        if(loader){
+            loader.style.opacity = "0";
+            loader.style.transition = "opacity 0.8s ease";
+            setTimeout(function(){
+                loader.style.display = "none";
+            }, 800);
+        }
+    }, 2000);
+});
 
 /* Counter Animation */
 let count=0;
