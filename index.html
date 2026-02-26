@@ -9,123 +9,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Orbitron',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+body{background:black;color:#00ffcc;overflow-x:hidden;scroll-behavior:smooth;}
 
-body{
-background:black;
-color:#00ffcc;
-overflow-x:hidden;
-}
-
-/* ================= MATRIX LOADER ================= */
-
+/* Loader */
 #loader{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-z-index:9999;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
+position:fixed;width:100%;height:100%;
+background:black;z-index:9999;
+display:flex;justify-content:center;align-items:center;
+font-size:30px;
 }
 
-canvas.matrix{
-position:absolute;
-top:0;
-left:0;
-}
-
-.glitch{
-font-size:40px;
-animation:glitch 1s infinite;
-}
-
-@keyframes glitch{
-0%{text-shadow:2px 0 red,-2px 0 blue;}
-50%{text-shadow:-2px 0 red,2px 0 blue;}
-100%{text-shadow:2px 0 red,-2px 0 blue;}
-}
-
-/* ================= NAV ================= */
-
-header{
-position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
-background:rgba(0,255,204,0.1);
-padding:15px 40px;
-border-radius:50px;
-backdrop-filter:blur(20px);
-z-index:1000;
-}
-
-/* ================= HERO ================= */
-
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-position:relative;
-}
-
-.hero h1{
-font-size:64px;
-color:#00ffcc;
-margin-bottom:20px;
-letter-spacing:2px;
-}
-
-.hero p{
-font-size:20px;
-color:#88ffee;
-opacity:0.8;
-max-width:700px;
-}
-
-.glow-bg{
-position:absolute;
-width:600px;
-height:600px;
-background:radial-gradient(circle,#00ffcc33,transparent 60%);
-z-index:-1;
-}
-
-/* ================= SECTIONS ================= */
-
-.section-dark{
+/* Sections */
+section{
 min-height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 padding:80px 20px;
-background:#050505;
 text-align:center;
 }
 
-.glass{
-background:rgba(0,255,204,0.08);
-padding:40px;
-border-radius:20px;
-backdrop-filter:blur(20px);
-box-shadow:0 0 30px #00ffcc22;
-max-width:800px;
-margin-top:30px;
-}
-
-/* ================= BUTTON ================= */
-
+/* Hero */
+.hero h1{font-size:60px;margin-bottom:20px;}
+.hero p{max-width:700px;color:#88ffee;}
 button{
 padding:12px 30px;
 border:none;
@@ -136,52 +44,82 @@ margin-top:30px;
 font-weight:bold;
 }
 
-/* ================= 3D BRAIN ================= */
+/* Glass UI */
+.glass{
+background:rgba(0,255,204,0.08);
+padding:40px;
+border-radius:20px;
+backdrop-filter:blur(20px);
+box-shadow:0 0 30px #00ffcc33;
+margin-top:30px;
+max-width:800px;
+}
 
-#brain{
-width:500px;
-height:500px;
+/* Counter */
+.counter{
+font-size:40px;
+margin-top:20px;
+}
+
+/* Roadmap */
+.timeline{
 margin-top:40px;
+max-width:800px;
+}
+.timeline div{
+margin:20px 0;
+padding:20px;
+border-left:3px solid #00ffcc;
+background:#050505;
+}
+
+/* Staking */
+.staking-box{
+margin-top:30px;
+padding:30px;
+background:#050505;
+border-radius:20px;
+box-shadow:0 0 20px #00ffcc33;
+}
+
+/* Responsive */
+@media(max-width:768px){
+.hero h1{font-size:36px;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- MATRIX LOADER -->
-<div id="loader">
-<canvas class="matrix"></canvas>
-<div class="glitch">BOOTING NEURAL PROTOCOL...</div>
-</div>
+<div id="loader">Initializing Monk.AI...</div>
 
-<header>Monk.AI</header>
-
-<!-- HERO SECTION -->
+<!-- HERO -->
 <section class="hero">
-<div class="glow-bg"></div>
-
 <h1>MONK.AI PROTOCOL</h1>
-<p>Decentralized Artificial Intelligence Infrastructure for the Next Generation of Autonomous Systems.</p>
-
-<div id="brain"></div>
-
+<p>Decentralized AI Infrastructure powering autonomous blockchain intelligence.</p>
 <button onclick="connectWallet()">Connect Wallet</button>
 </section>
 
-<!-- ABOUT SECTION -->
-<section class="section-dark">
+<!-- STATS -->
+<section>
+<h2>Network Stats</h2>
+<div class="counter" id="counter1">0</div>
+<p>Active AI Nodes</p>
+</section>
+
+<!-- ABOUT -->
+<section>
 <h2>About The Protocol</h2>
 <div class="glass">
 <p>
-Monk.AI is a decentralized AI network combining neural computation,
-blockchain governance and staking-based infrastructure to power the
-future of intelligent autonomous systems.
+Monk.AI combines decentralized computation, staking mechanics and AI infrastructure
+to create an autonomous neural blockchain network.
 </p>
 </div>
 </section>
 
-<!-- TOKENOMICS SECTION -->
-<section class="section-dark">
+<!-- TOKENOMICS -->
+<section>
 <h2>Tokenomics</h2>
 <div class="glass">
 <p>Total Supply: 1,000,000,000 MAI</p>
@@ -193,43 +131,52 @@ future of intelligent autonomous systems.
 </div>
 </section>
 
+<!-- ROADMAP -->
+<section>
+<h2>Roadmap</h2>
+<div class="timeline">
+<div>Phase 1 – Token Launch & Website</div>
+<div>Phase 2 – Staking Platform Release</div>
+<div>Phase 3 – AI Node Deployment</div>
+<div>Phase 4 – Exchange Listings</div>
+</div>
+</section>
+
+<!-- STAKING DASHBOARD -->
+<section>
+<h2>Staking Dashboard</h2>
+<div class="staking-box">
+<p>Your Staked MAI: 0</p>
+<p>Estimated APY: 18%</p>
+<button>Stake Now</button>
+</div>
+</section>
+
+<!-- WHITEPAPER -->
+<section>
+<h2>Whitepaper</h2>
+<button onclick="downloadWhitepaper()">Download Whitepaper</button>
+</section>
+
 <script>
 
-/* ================= MATRIX RAIN ================= */
-
-const canvas=document.querySelector(".matrix");
-const ctx=canvas.getContext("2d");
-canvas.height=window.innerHeight;
-canvas.width=window.innerWidth;
-
-const letters="01";
-const fontSize=16;
-const columns=canvas.width/fontSize;
-const drops=[];
-for(let x=0;x<columns;x++) drops[x]=1;
-
-function draw(){
-ctx.fillStyle="rgba(0,0,0,0.05)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="#0f0";
-ctx.font=fontSize+"px monospace;
-for(let i=0;i<drops.length;i++){
-const text=letters[Math.floor(Math.random()*letters.length)];
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-if(drops[i]*fontSize>canvas.height&&Math.random()>0.975) drops[i]=0;
-drops[i]++;
-}
-}
-setInterval(draw,33);
-
-/* Hide Loader */
+/* Loader */
 window.onload=function(){
 setTimeout(()=>{
 document.getElementById("loader").style.display="none";
-},3000);
+},2000);
 };
 
-/* Wallet Connect */
+/* Counter Animation */
+let count=0;
+const counter=document.getElementById("counter1");
+const interval=setInterval(()=>{
+count+=25;
+counter.innerText=count;
+if(count>=5000) clearInterval(interval);
+},20);
+
+/* Wallet */
 async function connectWallet(){
 if(window.ethereum){
 await window.ethereum.request({method:'eth_requestAccounts'});
@@ -239,36 +186,13 @@ alert("Install MetaMask");
 }
 }
 
-/* ================= 3D NEURAL BRAIN ================= */
-
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,500/500,0.1,1000);
-const renderer=new THREE.WebGLRenderer({alpha:true});
-renderer.setSize(500,500);
-document.getElementById("brain").appendChild(renderer.domElement);
-
-camera.position.z=5;
-
-const nodes=[];
-for(let i=0;i<50;i++){
-const geometry=new THREE.SphereGeometry(0.05,8,8);
-const material=new THREE.MeshBasicMaterial({color:0x00ffcc});
-const node=new THREE.Mesh(geometry,material);
-node.position.set(
-(Math.random()-0.5)*4,
-(Math.random()-0.5)*4,
-(Math.random()-0.5)*4
-);
-scene.add(node);
-nodes.push(node);
+/* Whitepaper Download */
+function downloadWhitepaper(){
+const link=document.createElement("a");
+link.href="#"; // Replace with PDF link later
+link.download="MonkAI_Whitepaper.pdf";
+link.click();
 }
-
-function animate(){
-requestAnimationFrame(animate);
-scene.rotation.y+=0.003;
-renderer.render(scene,camera);
-}
-animate();
 
 </script>
 
