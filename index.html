@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monk.AI | Future of Decentralized Intelligence</title>
+<title>Monk.AI | Decentralized Intelligence</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
@@ -13,6 +13,47 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
 body{background:#050510;color:white;overflow-x:hidden;cursor:none;}
 
+/* LOADING SCREEN */
+#loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+transition:1s ease;
+}
+
+.loader-circle{
+width:80px;
+height:80px;
+border:4px solid #6C2BD9;
+border-top:4px solid #00C2FF;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+0%{transform:rotate(0);}
+100%{transform:rotate(360deg);}
+}
+
+.loader-text{
+margin-top:20px;
+color:#00C2FF;
+letter-spacing:3px;
+animation:pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse{
+from{opacity:0.5;}
+to{opacity:1;}
+}
+
+/* PARTICLES */
 #particles-js{
 position:fixed;
 width:100%;
@@ -20,7 +61,7 @@ height:100%;
 z-index:-2;
 }
 
-/* Cursor Glow */
+/* CURSOR */
 .cursor{
 width:20px;height:20px;
 border-radius:50%;
@@ -48,6 +89,7 @@ z-index:1000;
 }
 
 header h1{color:#6C2BD9;}
+
 nav a{
 color:white;
 margin-left:20px;
@@ -98,17 +140,6 @@ box-shadow:0 0 30px rgba(0,194,255,0.3);
 margin-top:40px;
 }
 
-/* Brain animation */
-.brain{
-width:150px;
-margin:20px auto;
-animation:float 3s infinite ease-in-out;
-}
-@keyframes float{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-20px);}
-}
-
 footer{
 padding:40px;
 text-align:center;
@@ -120,6 +151,12 @@ color:#777;
 
 <body>
 
+<!-- LOADER -->
+<div id="loader">
+<div class="loader-circle"></div>
+<div class="loader-text">INITIALIZING AI PROTOCOL...</div>
+</div>
+
 <div id="particles-js"></div>
 <div class="cursor" id="cursor"></div>
 
@@ -127,7 +164,6 @@ color:#777;
 <h1>Monk.AI</h1>
 <nav>
 <a href="#about">About</a>
-<a href="#token">Token</a>
 <a href="#chart">Chart</a>
 </nav>
 </header>
@@ -140,9 +176,6 @@ color:#777;
 <section id="about">
 <h2>About Monk.AI</h2>
 <div class="glass">
-<svg class="brain" viewBox="0 0 200 200" fill="none" stroke="#00C2FF" stroke-width="3">
-<path d="M50 100 Q75 50 100 100 T150 100"/>
-</svg>
 <p>Decentralized AI protocol enabling staking, governance and intelligent automation.</p>
 </div>
 </section>
@@ -159,6 +192,16 @@ color:#777;
 </footer>
 
 <script>
+/* Hide Loader After Page Load */
+window.addEventListener("load",()=>{
+setTimeout(()=>{
+document.getElementById("loader").style.opacity="0";
+setTimeout(()=>{
+document.getElementById("loader").style.display="none";
+},1000);
+},2000);
+});
+
 /* Particles */
 particlesJS("particles-js",{
 particles:{number:{value:80},size:{value:3},
