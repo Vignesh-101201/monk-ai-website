@@ -397,26 +397,34 @@ antialias: true
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
-
+renderer.setClearColor(0x000000, 0);
 camera.position.z = 6;
 
 // ===== COIN =====
-const geometry = new THREE.CylinderGeometry(2, 2, 0.5, 64);
-const material = new THREE.MeshStandardMaterial({
+const geometry = new THREE.CylinderGeometry(1.5, 1.5, 0.4, 64);
+const material = new THREE.MeshPhysicalMaterial({
 color: 0x8B5CF6,
 metalness: 1,
-roughness: 0.25
+roughness: 0.15,
+clearcoat: 1,
+clearcoatRoughness: 0.1,
+reflectivity: 1
 });
 
 const coin = new THREE.Mesh(geometry, material);
 scene.add(coin);
+coin.position.y = -0.5;
 
 // ===== LIGHTS =====
-const light = new THREE.PointLight(0xffffff, 2);
-light.position.set(5, 5, 5);
-scene.add(light);
+const keyLight = new THREE.PointLight(0xffffff, 2);
+keyLight.position.set(5, 5, 5);
+scene.add(keyLight);
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+const rimLight = new THREE.PointLight(0x3B82F6, 2);
+rimLight.position.set(-5, 3, -5);
+scene.add(rimLight);
+
+const ambient = new THREE.AmbientLight(0xffffff, 0.6);
 scene.add(ambient);
 
 // ===== GLOWING M =====
@@ -451,6 +459,7 @@ coin.add(textMesh);
 function animate() {
 requestAnimationFrame(animate);
 coin.rotation.y += 0.01;
+coin.rotation.x = 0.3;
 renderer.render(scene, camera);
 }
 
