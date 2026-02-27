@@ -401,7 +401,7 @@ renderer.setClearColor(0x000000, 0);
 camera.position.z = 6;
 
 // ===== COIN =====
-const geometry = new THREE.CylinderGeometry(1.5, 1.5, 0.4, 64);
+const geometry = new THREE.CylinderGeometry(2.2, 2.2, 0.3, 64);
 const material = new THREE.MeshPhysicalMaterial({
 color: 0x8B5CF6,
 metalness: 0.9,
@@ -417,6 +417,9 @@ coin.position.y = -0.5;
 const keyLight = new THREE.PointLight(0xffffff, 2);
 keyLight.position.set(5, 5, 5);
 scene.add(keyLight);
+const glowLight = new THREE.PointLight(0x8B5CF6, 4, 15);
+glowLight.position.set(0, 0, 3);
+scene.add(glowLight);
 
 const rimLight = new THREE.PointLight(0x3B82F6, 2);
 rimLight.position.set(-5, 3, -5);
@@ -456,8 +459,8 @@ coin.add(textMesh);
 // ===== ANIMATION =====
 function animate() {
 requestAnimationFrame(animate);
-coin.rotation.y += 0.01;
-coin.rotation.x = 0.3;
+coin.rotation.y += 0.003;
+coin.rotation.x = 0.25;
 renderer.render(scene, camera);
 }
 
