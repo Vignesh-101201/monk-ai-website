@@ -58,18 +58,22 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 6;
 
 // --------------------
-// LIGHTING
+// CINEMATIC LIGHTING
 // --------------------
 
-const keyLight = new THREE.PointLight(0xffffff, 3);
+const keyLight = new THREE.DirectionalLight(0xffffff, 3);
 keyLight.position.set(5, 5, 5);
 scene.add(keyLight);
 
-const rimLight = new THREE.PointLight(0x8B5CF6, 4);
-rimLight.position.set(-5, -5, -5);
+const fillLight = new THREE.DirectionalLight(0xffd700, 2);
+fillLight.position.set(-5, 3, 5);
+scene.add(fillLight);
+
+const rimLight = new THREE.PointLight(0x8B5CF6, 5);
+rimLight.position.set(0, -5, 5);
 scene.add(rimLight);
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambientLight);
 
 // --------------------
@@ -105,12 +109,10 @@ scene.add(particles);
 
 const coinGeometry = new THREE.CylinderGeometry(2, 2, 0.4, 128);
 
-const coinMaterial = new THREE.MeshPhysicalMaterial({
-  color: 0xD4AF37,
+const coinMaterial = new THREE.MeshStandardMaterial({
+  color: 0xFFD700,
   metalness: 1,
-  roughness: 0.15,
-  clearcoat: 1,
-  clearcoatRoughness: 0
+  roughness: 0.25
 });
 
 const coin = new THREE.Mesh(coinGeometry, coinMaterial);
@@ -138,10 +140,10 @@ loader.load(
     textGeometry.center();
 
     const textMaterial = new THREE.MeshStandardMaterial({
-      color: 0x111111,
-      metalness: 0.9,
-      roughness: 0.3
-    });
+  color: 0x111111,
+  metalness: 0.2,
+  roughness: 0.8
+});
 
     const textMesh = new THREE.Mesh(textGeometry, textMaterial);
     textMesh.position.z = 0.25;
