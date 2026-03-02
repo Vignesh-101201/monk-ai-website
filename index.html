@@ -292,56 +292,146 @@
     <script>
         // 1. Initialize Icons
         lucide.createIcons();
+// 2. Three.js Advanced Neural Background (3D + X-Ray Core)
 
-        // 2. Three.js Neural Background
-        const canvas = document.querySelector('#three-canvas');
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+const canvas = document.querySelector('#three-canvas');
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: true,
+    alpha: true
+});
 
-        // Neural Particles (Point Cloud)
-        const geometry = new THREE.BufferGeometry();
-        const count = 3000;
-        const positions = new Float32Array(count * 3);
-        const colors = new Float32Array(count * 3);
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        for(let i = 0; i < count * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 12;
-            colors[i] = Math.random();
-        }
+const scene = new THREE.Scene();
 
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+const camera = new THREE.PerspectiveCamera(
+    65,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
 
-        const material = new THREE.PointsMaterial({
-            size: 0.02,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.4
-        });
+camera.position.z = 6;
 
-        const points = new THREE.Points(geometry, material);
-        scene.add(points);
+// --------------------
+// Ambient + Point Light
+// --------------------
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+scene.add(ambientLight);
 
-        // Core Sphere Nodes
-        const coreGeom = new THREE.IcosahedronGeometry(2, 2);
-        const coreMat = new THREE.MeshBasicMaterial({ color: 0x8B5CF6, wireframe: true, transparent: true, opacity: 0.1 });
-        const core = new THREE.Mesh(coreGeom, coreMat);
-        scene.add(core);
+const pointLight = new THREE.PointLight(0x8B5CF6, 2);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
 
-        function animate(time) {
-            points.rotation.y = time * 0.0001;
-            points.rotation.x = time * 0.00005;
-            core.rotation.y = -time * 0.0002;
-            
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        }
-        requestAnimationFrame(animate);
+// --------------------
+// Neural Particle Field
+// --------------------
+const particleGeometry = new THREE.BufferGeometry();
+const count = 4000;
+
+const positions = new Float32Array(count * 3);
+
+for (let i = 0; i < count * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 20;
+}
+
+particleGeometry.setAttribute(
+    'position',
+    new THREE.BufferAttribute(positions, 3)
+);
+
+const particleMaterial = new THREE.PointsMaterial({
+    size: 0.015,
+    color: 0x8B5CF6,
+    transparent: true,
+    opacity: 0.35
+});
+
+const particles = new THREE.Points(particleGeometry, particleMaterial);
+scene.add(particles);
+
+// --------------------
+// Inner Neural Wireframe Core
+// --------------------
+const coreGeometry = new THREE.IcosahedronGeometry(2, 2);
+
+const coreMaterial = new THREE.MeshBasicMaterial({
+    color: 0x8B5CF6,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.25
+});
+
+const core = new THREE.Mesh(coreGeometry, coreMaterial);
+scene.add(core);
+
+// --------------------
+// X-Ray Glass Outer Shell
+// --------------------
+const shellMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0x8B5CF6,
+    transparent: true,
+    opacity: 0.08,
+    roughness: 0,
+    metalness: 0.3,
+    transmission: 1,
+    clearcoat: 1,
+    clearcoatRoughness: 0
+});
+
+const shell = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(2.4, 2),
+    shellMaterial
+);
+
+scene.add(shell);
+
+// --------------------
+// Mouse Interaction
+// --------------------
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
+});
+
+// --------------------
+// Animation Loop
+// --------------------
+function animate(time) {
+
+    particles.rotation.y = time * 0.00005;
+
+    core.rotation.y += 0.002;
+    core.rotation.x += 0.001;
+
+    shell.rotation.y -= 0.0015;
+
+    // Smooth camera movement with mouse
+    camera.position.x += (mouseX * 0.8 - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY * 0.8 - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
+// --------------------
+// Responsive Resize
+// --------------------
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+     
 
         // 3. Realistic Terminal Logic
         const terminalRows = [
