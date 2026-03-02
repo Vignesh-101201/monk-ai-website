@@ -144,7 +144,8 @@ loader.load(
   roughness: 0.9
 });
     const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.position.z = 0.25;
+textMesh.rotation.x = -Math.PI / 2;
+textMesh.position.y = 0.21;
 
     coin.add(textMesh);
   }
