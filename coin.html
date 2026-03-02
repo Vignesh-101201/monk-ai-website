@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monk.AI</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
+
+<style>
+body {
+  margin: 0;
+  background: #08080C;
+  overflow: hidden;
+}
+canvas {
+  display: block;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="three-canvas"></canvas>
+
+<script>
+// --------------------
+// BASIC SETUP
+// --------------------
+
+const canvas = document.querySelector('#three-canvas');
+
+const renderer = new THREE.WebGLRenderer({
+  canvas,
+  antialias: true
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+  65,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
+
+camera.position.z = 6;
+
+// --------------------
+// LIGHTING
+// --------------------
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambientLight);
+
+const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
+keyLight.position.set(5, 5, 5);
+scene.add(keyLight);
+
+const fillLight = new THREE.DirectionalLight(0xffd700, 0.8);
+fillLight.position.set(-5, 2, 5);
+scene.add(fillLight);
+
+const rimLight = new THREE.PointLight(0x8B5CF6, 2);
+rimLight.position.set(0, -5, 4);
+scene.add(rimLight);
+
+// --------------------
+// PARTICLE FIELD
+// --------------------
+
+const particleGeometry = new THREE.BufferGeometry();
+const count = 3000;
+const positions = new Float32Array(count * 3);
+
+for (let i = 0; i < count * 3; i++) {
+  positions[i] = (Math.random() - 0.5) * 20;
+}
+
+particleGeometry.setAttribute(
+  'position',
+  new THREE.BufferAttribute(positions, 3)
+);
+
+const particleMaterial = new THREE.PointsMaterial({
+  size: 0.02,
+  color: 0x8B5CF6,
+  transparent: true,
+  opacity: 0.4
+});
+
+const particles = new THREE.Points(particleGeometry, particleMaterial);
+scene.add(particles);
+
+// --------------------
+// METALLIC GOLD COIN
+// --------------------
+
+const coinGeometry = new THREE.CylinderGeometry(2, 2, 0.4, 128);
+
+const coinMaterial = new THREE.MeshStandardMaterial({
+  color: 0xD4AF37,
+  metalness: 0.9,
+  roughness: 0.35
+});
+
+const coin = new THREE.Mesh(coinGeometry, coinMaterial);
+scene.add(coin);
+
+coin.rotation.x = Math.PI / 2;
+
+// --------------------
+// ADD STYLISH TEXT
+// --------------------
+
+const loader = new THREE.FontLoader();
+
+loader.load(
+  'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/fonts/droid/droid_sans_bold.typeface.json',
+  function (font) {
+
+    const textGeometry = new THREE.TextGeometry('M', {
+      font: font,
+      size: 1,
+      height: 0.2,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 0.04,
+      bevelSize: 0.03,
+      bevelSegments: 5
+    });
+
+    textGeometry.center();
+
+    const textMaterial = new THREE.MeshStandardMaterial({
+      color: 0x111111,
+      metalness: 0.6,
+      roughness: 0.4
+    });
+
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+    textMesh.rotation.x = -Math.PI / 2;
+    textMesh.position.y = 0.23;
+
+    coin.add(textMesh);
+  }
+);
+
+// --------------------
+// MOUSE PARALLAX
+// --------------------
+
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener('mousemove', (event) => {
+  mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
+});
+
+// --------------------
+// CLICK DETECTION
+// --------------------
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+window.addEventListener('mousemove', (event) => {
+
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObject(coin);
+
+  if (intersects.length > 0) {
+      document.body.style.cursor = "pointer";
+  } else {
+      document.body.style.cursor = "default";
+  }
+});
+
+window.addEventListener('click', (event) => {
+
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObject(coin);
+
+  if (intersects.length > 0) {
+      window.location.href = "index.html";
+  }
+});
+
+// --------------------
+// ANIMATION LOOP
+// --------------------
+
+function animate(time) {
+
+  particles.rotation.y = time * 0.00005;
+
+  coin.rotation.z += 0.01;
+
+  camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.05;
+  camera.position.y += (-mouseY * 1.5 - camera.position.y) * 0.05;
+
+  camera.lookAt(scene.position);
+
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
+// --------------------
+// RESPONSIVE
+// --------------------
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+</script>
+
+</body>
+</html>
