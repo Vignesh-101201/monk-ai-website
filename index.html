@@ -470,7 +470,47 @@ window.addEventListener('resize', () => {
             setTimeout(addRow, Math.random() * 2000 + 500);
         }
         addRow();
+// Tokenomics Chart
+const ctx = document.getElementById('tokenChart');
 
+if (ctx) {
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Public Sale',
+                'Private Sale',
+                'Team',
+                'Development',
+                'Marketing',
+                'Staking',
+                'Liquidity'
+            ],
+            datasets: [{
+                data: [20, 15, 15, 20, 10, 10, 10],
+                backgroundColor: [
+                    '#6C2BD9',
+                    '#00C2FF',
+                    '#9333EA',
+                    '#4F46E5',
+                    '#2563EB',
+                    '#8B5CF6',
+                    '#6366F1'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '65%',
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
         // 4. GSAP Scroll Animations
         gsap.registerPlugin(ScrollTrigger);
 
