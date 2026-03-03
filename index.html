@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ethers@6.10.0/dist/ethers.umd.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
@@ -99,9 +98,9 @@
                 <a href="#staking" class="hover:text-white transition-colors">Vaults</a>
             </div>
 
-          <button id="connectWallet" class="bg-white text-black px-6 py-2.5 rounded-xl font-bold text-sm hover:scale-105 transition-transform active:scale-95">
-    Connect Wallet
-</button>
+            <button class="bg-white text-black px-6 py-2.5 rounded-xl font-bold text-sm hover:scale-105 transition-transform active:scale-95">
+                Launch App
+            </button>
         </div>
     </nav>
 
@@ -389,9 +388,6 @@
             setTimeout(logLine, Math.random() * 2000 + 500);
         }
         logLine();
-        <button id="connectWallet" class="bg-white text-black px-6 py-2.5 rounded-xl font-bold text-sm hover:scale-105 transition-transform active:scale-95">
-    Connect Wallet
-</button>
 
         // --- GSAP Animations ---
         gsap.registerPlugin(ScrollTrigger);
